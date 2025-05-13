@@ -1,0 +1,49 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      # Add any installation commands here if needed
+      # - npm install
+  
+  pre_build:
+    commands:
+      - echo "Running tests..."
+      # Add any test commands here if needed
+      # - npm test
+      - echo "Pre-build phase completed on `date`"
+  
+  build:
+    commands:
+      - echo "Build started on `date`"
+      # Update the build date in the index.html file
+      - BUILD_DATE=$(date +"%B %d, %Y")
+      - echo "Setting build date to $BUILD_DATE"
+      - sed -i "s|<span id=\"build-date\">.*</span>|<span id=\"build-date\">$BUILD_DATE</span>|g" index.html
+      # You can add more build commands here, like bundling or minification
+      - echo "Build completed on `date`"
+  
+  post_build:
+    commands:
+      - echo "Post-build phase started on `date`"
+      # Add any post-build commands here if needed
+      - echo "Post-build phase completed on `date`"
+
+artifacts:
+  files:
+    - index.html
+    - css/**/*
+    - js/**/*
+    - images/**/*
+    - favicon.ico
+    - buildspec.yml
+    - appspec.yml
+  discard-paths: no
+
+cache:
+  paths:
+    # Specify paths to cache between builds if needed
+    # - 'node_modules/**/*'

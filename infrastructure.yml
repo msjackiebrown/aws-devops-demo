@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template for the AWS DevOps Demo Web Application'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: Dev
+    AllowedValues:
+      - Dev
+      - Test
+      - Prod
+    Description: Environment name for deployment
+
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+    Description: EC2 instance type
+
+Resources:
+  WebAppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for web application
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0  # In production, restrict to specific IPs
+
+  WebAppInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: ami-0c55b159cbfafe1f0  # Amazon Linux 2 (update to the latest AMI for your region)
+      SecurityGroupIds:
+        - !Ref WebAppSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-WebApp
+        - Key: Environment
+          Value: !Ref EnvironmentName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y httpd git ruby wget
+          systemctl start httpd
+          systemctl enable httpd
+          
+          # Install CodeDeploy Agent
+          cd /home/ec2-user
+          wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+          chmod +x ./install
+          ./install auto
+          
+          # Create a simple index.html while waiting for deployment
+          echo "<html><body><h1>AWS DevOps Demo Web App</h1><p>Waiting for CodeDeploy deployment...</p></body></html>" > /var/www/html/index.html
+          
+          # Tag instance for CodeDeploy
+          INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+          aws ec2 create-tags --resources $INSTANCE_ID --tags Key=CodeDeploy,Value=WebApp --region ${AWS::Region}
+
+  WebAppS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-webapp-artifacts
+        - Key: Environment
+          Value: !Ref EnvironmentName
+
+Outputs:
+  WebsiteURL:
+    Description: URL for the web application
+    Value: !Sub 'http://${WebAppInstance.PublicDnsName}'
+  
+  ArtifactBucket:
+    Description: S3 bucket for pipeline artifacts
+    Value: !Ref WebAppS3Bucket
+  
+  EC2InstanceId:
+    Description: EC2 instance ID
+    Value: !Ref WebAppInstance

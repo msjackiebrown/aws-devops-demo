@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS DevOps Demo App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>AWS DevOps Demo</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pipeline">CI/CD Pipeline</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>AWS CI/CD Pipeline Demo</h1>
+                <p>This sample application demonstrates CI/CD pipelines using AWS CodePipeline.</p>
+                <p>Version: <span id="app-version">1.0.0</span> | Build Date: <span id="build-date">May 12, 2025</span></p>
+                <button class="cta-button" onclick="updateCounter()">Click Me!</button>
+                <p>Button clicked <span id="counter">0</span> times</p>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Key Features</h2>
+            <div class="feature-cards">
+                <div class="card">
+                    <h3>Automated Deployments</h3>
+                    <p>Automatic deployments triggered by code changes to GitHub repository.</p>
+                </div>
+                <div class="card">
+                    <h3>Multiple Environments</h3>
+                    <p>Configure different deployment stages for development, testing, and production.</p>
+                </div>
+                <div class="card">
+                    <h3>Testing Integration</h3>
+                    <p>Run automated tests before deployment to ensure quality.</p>
+                </div>
+                <div class="card">
+                    <h3>Rollback Capability</h3>
+                    <p>Easy rollback to previous versions if issues are detected.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pipeline" class="pipeline">
+            <h2>CI/CD Pipeline Architecture</h2>
+            <div class="pipeline-diagram">
+                <div class="pipeline-stage">
+                    <div class="stage-icon">📁</div>
+                    <h3>Source</h3>
+                    <p>GitHub Repository</p>
+                </div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🔨</div>
+                    <h3>Build</h3>
+                    <p>AWS CodeBuild</p>
+                </div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🧪</div>
+                    <h3>Test</h3>
+                    <p>Unit & Integration</p>
+                </div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🚀</div>
+                    <h3>Deploy</h3>
+                    <p>AWS Hosting Service</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About This Project</h2>
+            <p>This demo project was created for AWS DevOps Engineer Professional certification study purposes.</p>
+            <p>It demonstrates how to set up a complete CI/CD pipeline using AWS services like CodePipeline, CodeBuild, and various deployment options.</p>
+            <p>For more information, see the <a href="https://github.com/yourusername/aws-devops-demo" target="_blank">GitHub repository</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AWS DevOps Demo | Created for AWS DevOps Professional Certification Study</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
