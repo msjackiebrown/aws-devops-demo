@@ -84,3 +84,122 @@ This project is open-source and available for educational purposes.
 ## Author
 
 Created for AWS DevOps Engineer Professional certification study.
+
+# Repository Notifications
+
+Repository notifications keep team members informed about changes to the codebase and pipeline status. This project implements notifications across multiple layers for comprehensive visibility.
+
+## 1. GitHub Repository Notifications
+
+GitHub's built-in notification system provides team awareness of repository activities:
+
+### 📣 Watching Repositories
+| Feature | Description |
+|---------|-------------|
+| **Watch Repository** | Receive notifications for issues, PRs, and commits |
+| **Configuration** | Repository → "Watch" dropdown → Select notification level |
+| **Options** | All Activity, Releases Only, Ignore |
+
+### 📧 Email and Web Notifications
+| Type | Description |
+|------|-------------|
+| **Email** | Notifications delivered based on GitHub settings |
+| **Web** | Accessible via bell icon in GitHub navigation bar |
+| **Setup** | GitHub Settings → Notifications |
+
+### 🔍 Custom Notification Routing
+* Filter by repository, activity type, or reason
+* Create rules to direct specific notifications to different email addresses
+
+## 2. AWS CodePipeline Notifications
+
+Pipeline execution notifications use Amazon SNS (Simple Notification Service):
+
+### ⚙️ SNS Topic Configuration
+```bash
+# Create a dedicated topic for pipeline notifications
+aws sns create-topic --name pipeline-notifications
+```
+
+* **Subscription Types**: 
+  - Email
+  - SMS
+  - Third-party integrations (Slack, Teams)
+
+### 🔄 CodePipeline Integration
+
+Pipeline events published to SNS include:
+* Pipeline started
+* Pipeline succeeded
+* Pipeline failed
+* Approval needed
+
+### 📋 Notification Rules Setup
+1. AWS Console → CodePipeline → Select Pipeline → Settings → Notification Rules
+2. Configure event types (state changes, approvals)
+3. Select SNS topic as target
+
+## 3. Status Monitoring
+
+Visual indicators provide at-a-glance status information:
+
+### 🏷️ Status Badge
+GitHub status badge in README showing current build status:
+
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=example-badge-id)
+
+### 📊 HTML Status Dashboard
+* Simple dashboard for pipeline status and recent deployments
+* Location: `/status/index.html`
+
+## Implementation Guide
+
+### GitHub Webhook Configuration
+```bash
+# Navigate to: Repository Settings → Webhooks → Add webhook
+# Configure the following:
+# - Payload URL: [Your endpoint]
+# - Content type: application/json
+# - Events: [Select relevant events]
+```
+
+### AWS SNS Setup
+```bash
+# Create SNS topic
+aws sns create-topic --name pipeline-notifications
+
+# Add email subscription
+aws sns subscribe \
+  --topic-arn [topic-arn] \
+  --protocol email \
+  --notification-endpoint your-email@example.com
+```
+
+### CodePipeline Notification Rule
+```bash
+# Navigate to: AWS Console → CodePipeline → Pipeline → Settings → Notification Rules
+# Configure:
+# - Detail type: Basic or Full
+# - Events: Pipeline state changes, approvals needed
+# - Targets: SNS topic
+```
+
+### Validation Process
+1. Make a minor repository change
+2. Push to trigger the pipeline
+3. Verify notification delivery via configured channels
+
+## Documentation Links
+
+| Service | Documentation |
+|---------|---------------|
+| **GitHub Webhooks** | [GitHub Webhook Documentation](https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks) |
+| **AWS SNS** | [AWS SNS Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/welcome.html) |
+| **CodePipeline** | [CodePipeline Notifications Documentation](https://docs.aws.amazon.com/codepipeline/latest/userguide/notification-rule-create.html) |
+
+## Future Enhancements
+
+- [ ] EventBridge integration for advanced event routing (Domain 5)
+- [ ] Slack/Teams webhook integration for team communication
+- [ ] Custom notification formatting with Lambda functions
+- [ ] Status monitoring dashboard with CloudWatch metrics
