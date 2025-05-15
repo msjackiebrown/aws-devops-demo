@@ -7,13 +7,13 @@ phases:
     commands:
       - echo "Installing dependencies..."
       # Add any installation commands here if needed
-      # - npm install
+      - npm install
   
   pre_build:
     commands:
       - echo "Running tests..."
       # Add any test commands here if needed
-      # - npm test
+      - npm test
       - echo "Pre-build phase completed on `date`"
   
   build:
