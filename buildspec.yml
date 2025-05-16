@@ -6,14 +6,18 @@ phases:
       nodejs: 18
     commands:
       - echo "Installing dependencies..."
-      # Add any installation commands here if needed
       - npm install
+      - npm install -g jest
   
   pre_build:
     commands:
       - echo "Running tests..."
-      # Add any test commands here if needed
-      - npm test
+      - echo "Running unit tests..."
+      - npm test -- --testPathPattern=tests/unit
+      - echo "Running integration tests..."
+      - npm test -- --testPathPattern=tests/integration
+      - echo "Generating test coverage report..."
+      - npm run test:coverage
       - echo "Pre-build phase completed on `date`"
   
   build:
@@ -41,9 +45,15 @@ artifacts:
     - favicon.ico
     - buildspec.yml
     - appspec.yml
+    - scripts/**/*
   discard-paths: no
+
+reports:
+  jest-reports:
+    files:
+      - 'coverage/clover.xml'
+    file-format: 'CLOVERXML'
 
 cache:
   paths:
-    # Specify paths to cache between builds if needed
-    # - 'node_modules/**/*'
+    - 'node_modules/**/*'

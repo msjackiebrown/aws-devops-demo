@@ -1,0 +1,15 @@
+{
+  "name": "aws-devops-demo",
+  "version": "1.0.1",
+  "description": "AWS DevOps Demo for CI/CD Pipeline",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2"
+  }
+}
