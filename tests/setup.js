@@ -35,13 +35,16 @@ global.console.log = jest.fn();
 // Mock window.scrollTo
 global.scrollTo = jest.fn();
 
+// Set up fake timers
+jest.useFakeTimers();
+
 // Reset mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();
   localStorage.clear();
-  jest.useFakeTimers();
 });
 
+// Clean up after tests
 afterEach(() => {
-  jest.useRealTimers();
+  // Clean up any mocks
 });

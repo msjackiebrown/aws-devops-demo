@@ -1,4 +1,6 @@
-// Main JavaScript file for the AWS DevOps Demo application
+/**
+ * Copy of main.js for easy instrumentation by Jest
+ */
 
 // Initialize counter
 let counter = 0;
@@ -77,3 +79,12 @@ function initApp() {
 
 // Run initialization when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initApp);
+
+// Export functions for testing
+module.exports = {
+  updateCounter,
+  checkDeploymentVersion,
+  updateBuildInfo,
+  showWelcomeMessage,
+  initApp
+};

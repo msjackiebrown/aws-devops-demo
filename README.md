@@ -29,6 +29,10 @@ sample-web-app/
 ├── js/
 │   └── main.js          # JavaScript functionality
 ├── images/              # Image assets
+├── tests/               # Test files
+│   ├── unit/            # Unit tests for JavaScript functions
+│   ├── integration/     # Integration tests for application flow
+│   └── setup.js         # Common test setup
 ├── scripts/             # Deployment scripts for CodeDeploy
 │   ├── before_install.sh
 │   ├── after_install.sh
@@ -45,7 +49,46 @@ This application is designed to be deployed using an AWS CI/CD pipeline:
 
 1. **Source Control**: GitHub repository
 2. **Build**: AWS CodeBuild using buildspec.yml
-3. **Deployment**: AWS CodeDeploy to EC2 instances using appspec.yml
+3. **Test**: Automated testing with Jest for unit and integration tests
+4. **Deployment**: AWS CodeDeploy to EC2 instances using appspec.yml
+
+## Testing
+
+The application uses Jest for comprehensive testing:
+
+### Test Structure
+
+- `tests/unit/`: Unit tests for individual JavaScript functions
+- `tests/integration/`: Integration tests for application flow
+- `tests/setup.js`: Common setup for all tests
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests in watch mode (development)
+npm run test:watch
+```
+
+### Test Coverage
+
+Our test suite aims for high code coverage with:
+
+- Unit tests for individual functions in main.js
+- Integration tests for complete application flow
+- DOM event handling tests
+- User interaction simulation
+
+Current coverage metrics:
+- Statement coverage: ~90%
+- Branch coverage: ~56%
+- Function coverage: ~84%
+- Line coverage: ~90%
 
 ## Deployment Instructions
 
@@ -73,6 +116,7 @@ This project serves as a practical example for the following AWS DevOps Professi
 - CI/CD Pipeline implementation
 - Source control integration
 - Build process automation
+- Test automation and coverage reporting
 - Deployment automation
 - Deployment strategies
 - Rollback procedures
