@@ -125,7 +125,7 @@ graph LR
     F --> H[Blue/Green Deployment]
 ```
 
-![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw?type=png)
+![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNp1kMtqwzAQRX9FzMYtJHYbU9fBi9C9obuuFzFWJQvlIdTIdZPg_17ZxoTQdDXMnTn3Dj7pVDSaFB50MeRMkg6PG4z5f_L3jdRpzs9ixY1kavKN90FxdlWZNeNK8KTOaVFQEKbqk94XtDVEMRXqnfpDQ_NLAGRppixJXu3ozTZRnTaRYoMjfj1UmJuRBD3Fn8NFbC_zgr9_OSfpWEMqYweXCb8oCoJyAG-HCr3xzOORLFe7vL40VZpq_bXrQTpINWR1l_-Pmfk6hpZb0wHnMZPG7I63dT8c7_d9fWhWCfkBUoVWiw?type=png)
 
 ### Pipeline Stages
 
