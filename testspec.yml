@@ -1,0 +1,76 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing test dependencies..."
+      - npm install
+      - npm install -g jest
+  
+  pre_build:
+    commands:
+      - echo "Setting up test environment..."
+      - echo "Current date: $(date)"
+      - mkdir -p test-reports
+  
+  build:
+    commands:
+      - echo "Running tests phase started on $(date)"
+      - echo "Running unit tests..."
+      - npm test -- --testPathPattern=tests/unit --json --outputFile=test-reports/unit-results.json
+      - echo "Running integration tests..."
+      - npm test -- --testPathPattern=tests/integration --json --outputFile=test-reports/integration-results.json
+      - echo "Running full test suite with coverage..."
+      - npm run test:coverage
+      - echo "Tests execution completed on $(date)"
+  
+  post_build:
+    commands:
+      - echo "Post-test phase started on $(date)"
+      - echo "Generating test result summary..."
+      - |
+        if [ -d "./coverage" ]; then
+          echo "Extracting coverage data for build phase..."
+          node -e "const fs=require('fs'); const summary=JSON.parse(fs.readFileSync('./coverage/coverage-summary.json')); const passed = summary.total.lines.pct >= 80; fs.writeFileSync('test-results.json', JSON.stringify({passed: passed, coverage: summary.total.lines.pct, timestamp: new Date().toISOString(), message: passed ? 'Tests passed with adequate coverage' : 'Tests failed coverage threshold check'}));"
+          
+          # Display summary
+          TEST_RESULTS=$(cat test-results.json)
+          echo "Test Results Summary: $TEST_RESULTS"
+          
+          # Exit with error if tests failed
+          node -e "const results=JSON.parse(process.env.TEST_RESULTS); process.exit(results.passed ? 0 : 1);" || { echo "Tests failed coverage threshold check!"; exit 1; }
+        else
+          echo "No coverage directory found. Tests may have failed!"
+          echo '{"passed":false,"timestamp":"'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'","message":"No coverage data generated. Tests likely failed."}' > test-results.json
+          exit 1
+        fi
+      - echo "Post-test phase completed on $(date)"
+
+reports:
+  jest-reports:
+    files:
+      - 'coverage/clover.xml'
+    file-format: 'CLOVERXML'
+    base-directory: '.'
+  junit-reports:
+    files:
+      - 'test-reports/junit.xml'
+    file-format: 'JUNITXML'
+    base-directory: '.'
+  json-reports:
+    files:
+      - 'test-results.json'
+    file-format: 'JSON'
+
+artifacts:
+  files:
+    - coverage/**/*
+    - test-reports/**/*
+    - test-results.json
+  discard-paths: no
+
+cache:
+  paths:
+    - 'node_modules/**/*'

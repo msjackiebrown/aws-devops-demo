@@ -1,70 +1,267 @@
+<style>
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+  th, td { padding: 8px; }
+  th { background-color: #f0f0f0; }
+  tr:nth-child(even) { background-color: #f9f9f9; }
+  .badge { 
+    display: inline-block;
+    padding: 3px 6px;
+    background-color: #0366d6;
+    color: white;
+    border-radius: 4px;
+    margin: 2px;
+    font-size: 90%;
+  }
+  .code-container { 
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 1em;
+  }
+  details { 
+    margin-bottom: 1em;
+    padding: 8px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+  }
+  summary { 
+    cursor: pointer; 
+    font-weight: bold;
+    color: #0366d6;
+  }
+</style>
+
 # AWS DevOps Demo Web Application
 
-This is a sample web application for demonstrating AWS CI/CD pipelines using AWS CodePipeline, CodeBuild, and CodeDeploy.
+[![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=example-badge-id)](https://github.com/yourusername/aws-devops-demo)
 
-## Quick Links
+> A demonstration web application showcasing AWS DevOps practices with comprehensive CI/CD pipeline integration using AWS CodePipeline, CodeBuild, and CodeDeploy. Features complete testing suite with Jest for unit and integration testing.
 
-| Setup Guides | Configuration Files | Related Resources |
-|--------------|---------------------|-------------------|
-| [CodePipeline Setup Guide](../CodePipeline-WebApp-Guide.md) | [buildspec.yml](buildspec.yml) | [Domain 1: SDLC Automation](../../Domain%201%20-%20SDLC%20Automation/) |
-| [Project Implementation Guide](../AWS-DevOps-Certification-Project-Guide.md) | [appspec.yml](appspec.yml) | [CodePipeline Resources](../../Domain%201%20-%20SDLC%20Automation/CodePipeline/) |
-| [CloudFormation Template](infrastructure.yml) | [Deployment Scripts](scripts/) | [Weekly Schedule](../../Study-Resources/Detailed-Weekly-Schedule.md) |
+## Quick Reference
+
+| Configuration | Testing | Deployment |
+|:-------------:|:-------:|:----------:|
+| [buildspec.yml](buildspec.yml) | [testspec.yml](testspec.yml) | [AppSpec](appspec.yml) |
+| [Infrastructure](infrastructure.yml) | [Jest Config](jest.config.js) | [Deployment Scripts](scripts/) |
+| [Blue-Green Deployment](infrastructure-blue-green.yml) | [Testing in CI/CD](docs/testing-pipeline.md) | [Pipeline Overview](#cicd-pipeline-overview) |
 
 ## Overview
 
-This project provides a practical implementation of CI/CD concepts covered in Domain 1 of the AWS DevOps Engineer Professional certification. It includes:
-- A simple static website with HTML, CSS, and JavaScript
-- AWS CodeBuild configuration (buildspec.yml)
-- AWS CodeDeploy configuration (appspec.yml)
-- CloudFormation template for infrastructure setup
-- Deployment scripts for various lifecycle hooks
+This project demonstrates best practices in AWS DevOps implementation, providing a comprehensive example for the AWS DevOps Engineer Professional certification. It includes:
+
+<table>
+<tr>
+<td width="50%">
+
+### Application Components
+- **Frontend**: Interactive web application with HTML, CSS, and JavaScript
+- **Testing Framework**: Complete Jest testing suite with unit and integration tests
+
+</td>
+<td width="50%">
+
+### CI/CD Components
+- **Configuration Files**: 
+  - `buildspec.yml` for AWS CodeBuild
+  - `appspec.yml` for AWS CodeDeploy
+  - Infrastructure as Code (CloudFormation templates)
+- **Deployment Strategies**: Including blue-green deployment capability
+- **Pipeline Notifications**: SNS integration for build and deployment notifications
+
+</td>
+</tr>
+</table>
 
 ## Project Structure
 
 ```
-sample-web-app/
-├── index.html           # Main HTML file
+aws-devops-demo/
+├── index.html                 # Main HTML file
 ├── css/
-│   └── styles.css       # CSS styles
+│   └── styles.css             # CSS styles
 ├── js/
-│   └── main.js          # JavaScript functionality
-├── images/              # Image assets
-├── tests/               # Test files
-│   ├── unit/            # Unit tests for JavaScript functions
-│   ├── integration/     # Integration tests for application flow
-│   └── setup.js         # Common test setup
-├── scripts/             # Deployment scripts for CodeDeploy
-│   ├── before_install.sh
-│   ├── after_install.sh
-│   ├── application_start.sh
-│   └── validate_service.sh
-├── buildspec.yml        # AWS CodeBuild configuration
-├── appspec.yml          # AWS CodeDeploy configuration
-└── README.md            # Project documentation
+│   └── main.js                # JavaScript functionality
+├── images/                    # Image assets
+├── tests/                     # Testing directory
+│   ├── unit/                  # Unit tests
+│   ├── integration/           # Integration tests
+│   └── coverage/              # Coverage tests
+├── scripts/                   # Deployment scripts for CodeDeploy
+├── buildspec.yml              # AWS CodeBuild configuration
+├── testspec.yml               # AWS CodeBuild test configuration
+├── appspec.yml                # AWS CodeDeploy configuration
+├── infrastructure.yml         # Main CloudFormation template
+└── docs/                      # Project documentation
 ```
+
+<details>
+  <summary><strong>🔍 View detailed project structure</strong></summary>
+
+```
+aws-devops-demo/
+├── index.html                 # Main HTML file
+├── css/
+│   └── styles.css             # CSS styles
+├── js/
+│   └── main.js                # JavaScript functionality
+├── images/                    # Image assets
+├── tests/
+│   ├── setup.js               # Testing environment configuration
+│   ├── coverage.test.js       # Coverage testing utilities
+│   ├── complete-coverage.test.js  # Comprehensive coverage tests
+│   ├── direct-main.test.js    # Direct function testing
+│   ├── mainjs-for-coverage.js # Prepared module for coverage
+│   ├── unit/
+│   │   └── main.test.js       # Unit tests for JavaScript functions
+│   ├── integration/
+│   │   ├── app.test.js        # Application flow integration tests
+│   │   ├── deployment.test.js # Deployment integration tests
+│   │   ├── html.test.js       # HTML structure tests
+│   │   └── infrastructure.test.js # Infrastructure tests
+│   └── coverage/              # Coverage instrumentation tests
+├── scripts/                   # Deployment scripts for CodeDeploy
+│   ├── before_install.sh      # Pre-installation setup
+│   ├── after_install.sh       # Post-installation configuration
+│   ├── start_application.sh   # Application startup
+│   ├── stop_application.sh    # Application shutdown
+│   ├── validate_service.sh    # Service validation
+│   ├── setup-pipeline.ps1     # Pipeline setup automation
+│   └── create-pipeline-notifications.ps1 # Notification setup
+├── buildspec.yml              # AWS CodeBuild configuration
+├── appspec.yml                # AWS CodeDeploy configuration
+├── infrastructure.yml         # Main CloudFormation template
+├── infrastructure-blue-green.yml # Blue-Green deployment template
+├── jest.config.js             # Jest configuration
+├── package.json               # Node.js package configuration
+├── .gitignore                 # Git exclusion patterns
+├── docs/
+│   └── testing-pipeline.md    # Testing pipeline documentation
+└── README.md                  # Project documentation
+```
+</details>
 
 ## CI/CD Pipeline Overview
 
-This application is designed to be deployed using an AWS CI/CD pipeline:
+This application demonstrates a modern CI/CD pipeline using AWS services with separate testing and building phases:
 
-1. **Source Control**: GitHub repository
-2. **Build**: AWS CodeBuild using buildspec.yml
-3. **Test**: Automated testing with Jest for unit and integration tests
-4. **Deployment**: AWS CodeDeploy to EC2 instances using appspec.yml
+<div align="center">
+
+```mermaid
+graph LR
+    A[GitHub Repository] -->|Code Push| B[AWS CodePipeline]
+    B --> C[Test Phase]
+    C -->|Run Tests| D[Test Reports]
+    D -->|Validation| E[Build Phase]
+    E -->|Build Artifacts| F[AWS CodeDeploy]
+    F --> G[Production Deployment]
+    F --> H[Blue/Green Deployment]
+```
+
+![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw?type=png)](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw)
+
+</div>
+
+### Pipeline Stages
+
+<table>
+<tr>
+<td width="33%">
+
+#### 1️⃣ Source Control
+- GitHub repository integration
+- Webhook triggers for automated builds
+- Code change detection and validation
+
+</td>
+<td width="33%">
+
+#### 2️⃣ Test Phase
+- AWS CodeBuild using `testspec.yml`
+- Runs unit and integration tests
+- Generates coverage reports
+- Validates code quality
+- Produces `test-results.json`
+
+</td>
+<td width="33%">
+
+#### 3️⃣ Build Phase
+- AWS CodeBuild using `buildspec.yml`
+- Verifies test results
+- Creates deployment artifacts
+- Updates build date and version info
+- Prepares for deployment
+
+</td>
+</tr>
+<tr>
+<td>
+
+#### 4️⃣ Reports
+- Coverage reports to CodeBuild
+- Test results in AWS Console
+- Unit and integration test details
+- Coverage metrics visualization
+
+</td>
+<td colspan="2">
+
+#### 5️⃣ Deployment
+- AWS CodeDeploy to EC2 instances
+- Configurable with `appspec.yml`
+- Lifecycle hooks in `scripts/` directory
+- Blue/Green deployment capability
+- Automated rollback on failure
+
+</td>
+</tr>
+</table>
 
 ## Testing
 
-The application uses Jest for comprehensive testing:
+The application features a comprehensive testing framework using Jest for both unit and integration tests.
+
+<table>
+<tr>
+<td width="60%">
 
 ### Test Structure
+- **Unit Tests**: `tests/unit/` - Tests individual JavaScript functions and modules
+- **Integration Tests**: `tests/integration/` - Tests application flow and component integration
+- **Coverage Tests**: Various approaches for thorough code coverage reporting
+- **Test Setup**: `tests/setup.js` - Configures the test environment with mocks for browser APIs
 
-- `tests/unit/`: Unit tests for individual JavaScript functions
-- `tests/integration/`: Integration tests for application flow
-- `tests/setup.js`: Common setup for all tests
+</td>
+<td width="40%">
+
+### Test Coverage
+
+**Current metrics (May 2025):**
+- Statement coverage: <span style="color:green">~90%</span>
+- Branch coverage: <span style="color:orange">~56%</span>
+- Function coverage: <span style="color:green">~84%</span>
+- Line coverage: <span style="color:green">~90%</span>
+
+</td>
+</tr>
+</table>
+
+### Test Types
+
+| Test Type | Purpose | Key Files |
+|:----------|:--------|:----------|
+| **Unit Tests** | Test individual functions in isolation | `tests/unit/main.test.js` |
+| **Integration Tests** | Test application flow | `tests/integration/app.test.js` |
+| **DOM Tests** | Test DOM manipulation | `tests/integration/html.test.js` |
+| **Infrastructure Tests** | Test infrastructure configuration | `tests/integration/infrastructure.test.js` |
+| **Coverage Tests** | Ensure code coverage | `tests/complete-coverage.test.js` |
 
 ### Running Tests
 
 ```bash
+# Install dependencies
+npm install
+
 # Run all tests
 npm test
 
@@ -73,177 +270,367 @@ npm run test:coverage
 
 # Run tests in watch mode (development)
 npm run test:watch
+
+# Run specific test files
+npm test -- tests/unit/main.test.js
 ```
 
-### Test Coverage
+Our test suite achieves high code coverage through multiple testing approaches:
 
-Our test suite aims for high code coverage with:
+- ✅ **Function Testing**: Direct testing of all JavaScript functions
+- ✅ **Event Testing**: Simulation of browser events and user interactions
+- ✅ **DOM Testing**: Verification of DOM manipulations
+- ✅ **Error Handling**: Testing of error conditions and edge cases
 
-- Unit tests for individual functions in main.js
-- Integration tests for complete application flow
-- DOM event handling tests
-- User interaction simulation
+## Development & Deployment
 
-Current coverage metrics:
-- Statement coverage: ~90%
-- Branch coverage: ~56%
-- Function coverage: ~84%
-- Line coverage: ~90%
+### Local Development
 
-## Deployment Instructions
+<div class="code-container">
 
-### Prerequisites
-- AWS Account
-- AWS CLI configured with appropriate permissions
-- GitHub account
+```powershell
+# Clone the repository
+git clone https://github.com/yourusername/aws-devops-demo.git
 
-### Setting Up the Pipeline
+# Navigate to project directory
+cd aws-devops-demo
 
-1. Push this repository to your GitHub account
-2. Create an AWS CodePipeline with the following stages:
-   - Source: Connect to your GitHub repository
-   - Build: Use AWS CodeBuild with the included buildspec.yml
-   - Deploy: Use AWS CodeDeploy with the included appspec.yml
+# Install dependencies
+npm install
 
-## Local Development
+# Run tests
+npm test
 
-To run this application locally, simply open the index.html file in a web browser.
+# Open in browser (Windows PowerShell)
+Start-Process "index.html"
+```
 
-## AWS DevOps Professional Certification Study Notes
+</div>
 
-This project serves as a practical example for the following AWS DevOps Professional certification topics:
+### Prerequisites for AWS Deployment
 
-- CI/CD Pipeline implementation
-- Source control integration
-- Build process automation
-- Test automation and coverage reporting
-- Deployment automation
-- Deployment strategies
-- Rollback procedures
+<table>
+<tr>
+<td width="50%">
+
+- ✅ AWS Account with appropriate permissions
+- ✅ AWS CLI installed and configured
+- ✅ GitHub account for source control
+- ✅ Node.js and npm for local testing
+
+</td>
+<td width="50%">
+
+<img src="https://d1.awsstatic.com/Products/product-name/diagrams/product-page-diagram_CodePipeline.4a1bea38d5e4c7dd6e685983586bc7b9c1a38688.png" width="100%" alt="AWS CodePipeline Diagram">
+
+</td>
+</tr>
+</table>
+
+### Setting Up the AWS CI/CD Pipeline
+
+<details>
+<summary><strong>🚀 Option 1: Using CloudFormation</strong></summary>
+
+```powershell
+# Deploy the infrastructure
+aws cloudformation create-stack --stack-name aws-devops-demo `
+  --template-body file://infrastructure.yml `
+  --capabilities CAPABILITY_IAM
+```
+
+For Blue/Green Deployment:
+```powershell
+# Deploy blue/green infrastructure
+aws cloudformation create-stack --stack-name aws-devops-demo-blue-green `
+  --template-body file://infrastructure-blue-green.yml `
+  --capabilities CAPABILITY_IAM
+```
+</details>
+
+<details>
+<summary><strong>🖱️ Option 2: Using AWS Console</strong></summary>
+
+1. Navigate to AWS CodePipeline Console
+2. Create a new pipeline connecting to your GitHub repository
+3. Configure pipeline stages as described below
+</details>
+
+<details>
+<summary><strong>💻 Option 3: Using Automated Script</strong></summary>
+
+For easier setup, you can use the included PowerShell script:
+
+```powershell
+# Navigate to scripts directory
+cd scripts
+
+# Run the setup script
+./setup-pipeline.ps1
+```
+
+The script will:
+1. Check for AWS CLI installation and configuration
+2. Create an S3 bucket for build artifacts if needed
+3. Create CodeBuild projects for test and build phases
+4. Create the CodePipeline with all necessary stages
+
+> **Note**: After running the script, you'll need to configure the GitHub connection and IAM roles as prompted.
+</details>
+
+## Features
+
+<div class="feature-grid">
+<table>
+<tr>
+<td width="50%">
+
+### Application Features
+- 📊 Interactive counter with milestone messages
+- 🔄 Automatic version change detection
+- 🔽 Smooth scrolling navigation
+- 📅 Build date information display
+
+</td>
+<td width="50%">
+
+### DevOps Features
+- 🧪 **Comprehensive Testing**: Unit and integration tests with Jest
+- 🔄 **CI/CD Pipeline**: Full AWS CodePipeline integration
+- 📑 **Infrastructure as Code**: CloudFormation templates
+- 🚀 **Multiple Deployment Strategies**: 
+  - Standard deployment
+  - Blue/Green deployment
+- 🔔 **Notification System**: SNS integration for alerts
+- ✅ **Build Badges**: Visual status indicators
+
+</td>
+</tr>
+</table>
+</div>
+
+### Technical Implementation
+
+<div class="implementation-stack">
+<table>
+<tr>
+<th>Frontend</th>
+<th>Testing</th>
+<th>CI/CD</th>
+<th>Infrastructure</th>
+<th>Deployment</th>
+</tr>
+<tr>
+<td>HTML5</td>
+<td>Jest</td>
+<td>CodeBuild</td>
+<td>CloudFormation</td>
+<td>AppSpec</td>
+</tr>
+<tr>
+<td>CSS3</td>
+<td>jsdom</td>
+<td>CodeDeploy</td>
+<td>IAM</td>
+<td>Lifecycle hooks</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>Coverage</td>
+<td>CodePipeline</td>
+<td>S3</td>
+<td>Scripts</td>
+</tr>
+</table>
+</div>
+
+## AWS DevOps Professional Certification Topics
+
+This project demonstrates practical implementation of these AWS DevOps Professional certification topics:
+
+<div class="certification-topics">
+<table>
+<tr>
+<th width="30%">Domain</th>
+<th width="70%">Topics Demonstrated</th>
+</tr>
+<tr>
+<td><strong>SDLC Automation</strong></td>
+<td>
+  <span class="badge">CI/CD Pipeline implementation</span>
+  <span class="badge">Source control integration</span>
+  <span class="badge">Automated testing</span>
+</td>
+</tr>
+<tr>
+<td><strong>Configuration Management</strong></td>
+<td>
+  <span class="badge">Infrastructure as Code</span>
+  <span class="badge">CloudFormation templates</span>
+  <span class="badge">Resource provisioning</span>
+</td>
+</tr>
+<tr>
+<td><strong>Resilience & High Availability</strong></td>
+<td>
+  <span class="badge">Blue/Green deployment</span>
+  <span class="badge">Automated rollback</span>
+  <span class="badge">Error handling</span>
+</td>
+</tr>
+<tr>
+<td><strong>Monitoring & Logging</strong></td>
+<td>
+  <span class="badge">Pipeline notifications</span>
+  <span class="badge">Status monitoring</span>
+  <span class="badge">Test reporting</span>
+</td>
+</tr>
+<tr>
+<td><strong>Security & Compliance</strong></td>
+<td>
+  <span class="badge">Secure deployment practices</span>
+  <span class="badge">IAM role configuration</span>
+  <span class="badge">Permission management</span>
+</td>
+</tr>
+</table>
+</div>
 
 ## License
 
-This project is open-source and available for educational purposes.
+<table>
+<tr>
+<td width="70%">
+
+This project is open-source and available for educational purposes under the MIT license.
+
+</td>
+<td width="30%">
+
+Copyright © 2025 AWS DevOps Demo
+
+</td>
+</tr>
+</table>
 
 ## Author
 
-Created for AWS DevOps Engineer Professional certification study.
+Created for AWS DevOps Engineer Professional certification study purposes.
 
-# Repository Notifications
+## Notifications & Monitoring
 
-Repository notifications keep team members informed about changes to the codebase and pipeline status. This project implements notifications across multiple layers for comprehensive visibility.
+The project includes a comprehensive notification system to keep team members informed about changes to the codebase and pipeline status.
 
-## 1. GitHub Repository Notifications
+<div class="notification-system">
+<table>
+<tr>
+<td width="50%">
 
-GitHub's built-in notification system provides team awareness of repository activities:
+### Notification Types
 
-### 📣 Watching Repositories
-| Feature | Description |
-|---------|-------------|
-| **Watch Repository** | Receive notifications for issues, PRs, and commits |
-| **Configuration** | Repository → "Watch" dropdown → Select notification level |
-| **Options** | All Activity, Releases Only, Ignore |
+#### GitHub Repository Notifications
+- 👀 **Repository Watches**: Team members can watch the repository for changes
+- 🔄 **PR and Commit Notifications**: Automatic notifications for code changes
+- 📧 **Custom Email Routing**: Configurable email notification rules
 
-### 📧 Email and Web Notifications
-| Type | Description |
-|------|-------------|
-| **Email** | Notifications delivered based on GitHub settings |
-| **Web** | Accessible via bell icon in GitHub navigation bar |
-| **Setup** | GitHub Settings → Notifications |
+#### Pipeline Notifications (AWS SNS)
+- 🏗️ **Build Status Alerts**: Notifications for successful/failed builds
+- 🚀 **Deployment Status**: Alerts for deployment progress
+- ✋ **Approval Requests**: Notifications for manual approval steps
 
-### 🔍 Custom Notification Routing
-* Filter by repository, activity type, or reason
-* Create rules to direct specific notifications to different email addresses
+</td>
+<td width="50%">
 
-## 2. AWS CodePipeline Notifications
+### Setting Up Notifications
 
-Pipeline execution notifications use Amazon SNS (Simple Notification Service):
+#### Automated Setup
+For easy setup of pipeline notifications, use the included PowerShell script:
 
-### ⚙️ SNS Topic Configuration
-```bash
-# Create a dedicated topic for pipeline notifications
-aws sns create-topic --name pipeline-notifications
+```powershell
+# Navigate to scripts directory
+cd scripts
+
+# Run the notification setup script
+./create-pipeline-notifications.ps1
 ```
 
-* **Subscription Types**: 
-  - Email
-  - SMS
-  - Third-party integrations (Slack, Teams)
+This script will:
+1. Create an SNS topic for notifications
+2. Set up email subscriptions for team members
+3. Configure CloudWatch Events rules for:
+   - Pipeline failures in any stage
+   - Test stage failures
+4. Format notification messages for better readability
 
-### 🔄 CodePipeline Integration
+</td>
+</tr>
+</table>
+</div>
 
-Pipeline events published to SNS include:
-* Pipeline started
-* Pipeline succeeded
-* Pipeline failed
-* Approval needed
+### Status Monitoring
 
-### 📋 Notification Rules Setup
-1. AWS Console → CodePipeline → Select Pipeline → Settings → Notification Rules
-2. Configure event types (state changes, approvals)
-3. Select SNS topic as target
+<div class="status-monitoring">
+<table>
+<tr>
+<td width="33%">
 
-## 3. Status Monitoring
+#### Build Badges
+- README includes CodeBuild status badge
+- Visual indication of build status
+- Links to detailed build reports
 
-Visual indicators provide at-a-glance status information:
+</td>
+<td width="33%">
 
-### 🏷️ Status Badge
-GitHub status badge in README showing current build status:
+#### CloudWatch Dashboards
+- Pipeline metrics viewable in CloudWatch
+- Custom dashboards for key metrics
+- Alarm configuration for critical issues
 
-![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=example-badge-id)
+</td>
+<td width="33%">
 
-### 📊 HTML Status Dashboard
-* Simple dashboard for pipeline status and recent deployments
-* Location: `/status/index.html`
+#### CodePipeline Visualization
+- Pipeline progress visible in AWS Console
+- Stage-by-stage status monitoring
+- Historical execution records
 
-## Implementation Guide
+</td>
+</tr>
+</table>
+</div>
 
-### GitHub Webhook Configuration
-```bash
-# Navigate to: Repository Settings → Webhooks → Add webhook
-# Configure the following:
-# - Payload URL: [Your endpoint]
-# - Content type: application/json
-# - Events: [Select relevant events]
-```
+## Additional Resources
 
-### AWS SNS Setup
-```bash
-# Create SNS topic
-aws sns create-topic --name pipeline-notifications
+<table>
+<tr>
+<td width="33%">
 
-# Add email subscription
-aws sns subscribe \
-  --topic-arn [topic-arn] \
-  --protocol email \
-  --notification-endpoint your-email@example.com
-```
+### Configuration Files
+- [buildspec.yml](buildspec.yml): AWS CodeBuild configuration
+- [testspec.yml](testspec.yml): AWS CodeBuild test configuration
+- [appspec.yml](appspec.yml): AWS CodeDeploy configuration
+- [jest.config.js](jest.config.js): Jest testing configuration
 
-### CodePipeline Notification Rule
-```bash
-# Navigate to: AWS Console → CodePipeline → Pipeline → Settings → Notification Rules
-# Configure:
-# - Detail type: Basic or Full
-# - Events: Pipeline state changes, approvals needed
-# - Targets: SNS topic
-```
+</td>
+<td width="33%">
 
-### Validation Process
-1. Make a minor repository change
-2. Push to trigger the pipeline
-3. Verify notification delivery via configured channels
+### AWS Documentation
+- [AWS CodePipeline User Guide](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html)
+- [AWS CodeBuild User Guide](https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html)
+- [AWS CodeDeploy User Guide](https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html)
 
-## Documentation Links
+</td>
+<td width="33%">
 
-| Service | Documentation |
-|---------|---------------|
-| **GitHub Webhooks** | [GitHub Webhook Documentation](https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks) |
-| **AWS SNS** | [AWS SNS Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/welcome.html) |
-| **CodePipeline** | [CodePipeline Notifications Documentation](https://docs.aws.amazon.com/codepipeline/latest/userguide/notification-rule-create.html) |
+### Future Enhancements
+- [ ] Integration with AWS X-Ray for distributed tracing
+- [ ] Enhanced CloudWatch metrics and alarms
+- [ ] Slack/Teams webhook integration for team notifications
+- [ ] Automated security scanning in the pipeline
+- [ ] Infrastructure testing with CloudFormation Guard
 
-## Future Enhancements
-
-- [ ] EventBridge integration for advanced event routing (Domain 5)
-- [ ] Slack/Teams webhook integration for team communication
-- [ ] Custom notification formatting with Lambda functions
-- [ ] Status monitoring dashboard with CloudWatch metrics
+</td>
+</tr>
+</table>
