@@ -319,25 +319,20 @@ aws cloudformation create-stack --stack-name aws-devops-demo-blue-green `
 </details>
 
 <details>
-<summary><strong>💻 Option 3: Using Automated Script</strong></summary>
+<summary><strong>💻 Option 3: Complete Manual Setup Guide</strong></summary>
 
-For easier setup, you can use the included PowerShell script:
+For a step-by-step guide on setting up the entire CI/CD pipeline manually:
 
-```powershell
-# Navigate to scripts directory
-cd scripts
+1. Read our [Manual Pipeline Setup Guide](docs/manual-pipeline-setup.md)
+2. This comprehensive guide covers:
+   - Creating S3 buckets for artifacts
+   - Setting up IAM roles with proper permissions
+   - Creating CodeBuild projects for test and build phases
+   - Creating the CodePipeline with all required stages
+   - Configuring GitHub connections
+   - Setting up notifications for pipeline events
 
-# Run the setup script
-./setup-pipeline.ps1
-```
-
-The script will:
-1. Check for AWS CLI installation and configuration
-2. Create an S3 bucket for build artifacts if needed
-3. Create CodeBuild projects for test and build phases
-4. Create the CodePipeline with all necessary stages
-
-> **Note**: After running the script, you'll need to configure the GitHub connection and IAM roles as prompted.
+> **Note**: The manual setup provides a deeper understanding of how each AWS service is configured to work together in a complete DevOps pipeline.
 </details>
 
 ## Features
@@ -487,24 +482,16 @@ The project includes a comprehensive notification system to keep team members in
 
 ### Setting Up Notifications
 
-#### Automated Setup
-For easy setup of pipeline notifications, use the included PowerShell script:
+#### Manual Setup
+To set up pipeline notifications following AWS best practices:
 
-```powershell
-# Navigate to scripts directory
-cd scripts
-
-# Run the notification setup script
-./create-pipeline-notifications.ps1
-```
-
-This script will:
-1. Create an SNS topic for notifications
-2. Set up email subscriptions for team members
-3. Configure CloudWatch Events rules for:
-   - Pipeline failures in any stage
-   - Test stage failures
-4. Format notification messages for better readability
+1. Follow the detailed instructions in our [Manual Pipeline Setup Guide](docs/manual-pipeline-setup.md#step-6-set-up-pipeline-notifications)
+2. The guide covers:
+   - Creating an SNS topic for notifications
+   - Setting up email subscriptions for team members
+   - Configuring CloudWatch Events rules for pipeline status changes
+   - Creating custom notification formats for different event types
+   - Setting up specific alerts for test failures
 
 </td>
 </tr>
