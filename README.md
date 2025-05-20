@@ -1,35 +1,4 @@
-<style>
-  table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
-  th, td { padding: 8px; }
-  th { background-color: #f0f0f0; }
-  tr:nth-child(even) { background-color: #f9f9f9; }
-  .badge { 
-    display: inline-block;
-    padding: 3px 6px;
-    background-color: #0366d6;
-    color: white;
-    border-radius: 4px;
-    margin: 2px;
-    font-size: 90%;
-  }
-  .code-container { 
-    background-color: #f6f8fa;
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 1em;
-  }
-  details { 
-    margin-bottom: 1em;
-    padding: 8px;
-    background-color: #f8f8f8;
-    border-radius: 6px;
-  }
-  summary { 
-    cursor: pointer; 
-    font-weight: bold;
-    color: #0366d6;
-  }
-</style>
+<!-- CSS styling removed - using native GitHub markdown formatting -->
 
 # AWS DevOps Demo Web Application
 
@@ -144,7 +113,6 @@ aws-devops-demo/
 
 This application demonstrates a modern CI/CD pipeline using AWS services with separate testing and building phases:
 
-<div align="center">
 
 ```mermaid
 graph LR
@@ -157,9 +125,7 @@ graph LR
     F --> H[Blue/Green Deployment]
 ```
 
-![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw?type=png)](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw)
-
-</div>
+![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNplksFuwjAMhl_Fyg0kpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw?type=png)
 
 ### Pipeline Stages
 
@@ -237,10 +203,10 @@ The application features a comprehensive testing framework using Jest for both u
 ### Test Coverage
 
 **Current metrics (May 2025):**
-- Statement coverage: <span style="color:green">~90%</span>
-- Branch coverage: <span style="color:orange">~56%</span>
-- Function coverage: <span style="color:green">~84%</span>
-- Line coverage: <span style="color:green">~90%</span>
+- Statement coverage: **90%** ✅
+- Branch coverage: **56%** ⚠️
+- Function coverage: **84%** ✅
+- Line coverage: **90%** ✅
 
 </td>
 </tr>
@@ -286,8 +252,6 @@ Our test suite achieves high code coverage through multiple testing approaches:
 
 ### Local Development
 
-<div class="code-container">
-
 ```powershell
 # Clone the repository
 git clone https://github.com/yourusername/aws-devops-demo.git
@@ -304,8 +268,6 @@ npm test
 # Open in browser (Windows PowerShell)
 Start-Process "index.html"
 ```
-
-</div>
 
 ### Prerequisites for AWS Deployment
 
@@ -380,7 +342,6 @@ The script will:
 
 ## Features
 
-<div class="feature-grid">
 <table>
 <tr>
 <td width="50%">
@@ -407,11 +368,8 @@ The script will:
 </td>
 </tr>
 </table>
-</div>
+## Technical Implementation
 
-### Technical Implementation
-
-<div class="implementation-stack">
 <table>
 <tr>
 <th>Frontend</th>
@@ -442,13 +400,11 @@ The script will:
 <td>Scripts</td>
 </tr>
 </table>
-</div>
 
 ## AWS DevOps Professional Certification Topics
 
 This project demonstrates practical implementation of these AWS DevOps Professional certification topics:
 
-<div class="certification-topics">
 <table>
 <tr>
 <th width="30%">Domain</th>
@@ -456,46 +412,34 @@ This project demonstrates practical implementation of these AWS DevOps Professio
 </tr>
 <tr>
 <td><strong>SDLC Automation</strong></td>
-<td>
-  <span class="badge">CI/CD Pipeline implementation</span>
-  <span class="badge">Source control integration</span>
-  <span class="badge">Automated testing</span>
+<td>  `CI/CD Pipeline implementation` `Source control integration` `Automated testing`
 </td>
 </tr>
 <tr>
 <td><strong>Configuration Management</strong></td>
-<td>
-  <span class="badge">Infrastructure as Code</span>
-  <span class="badge">CloudFormation templates</span>
-  <span class="badge">Resource provisioning</span>
+<td>  `Infrastructure as Code` `CloudFormation templates` `Resource provisioning`
 </td>
 </tr>
 <tr>
 <td><strong>Resilience & High Availability</strong></td>
-<td>
-  <span class="badge">Blue/Green deployment</span>
-  <span class="badge">Automated rollback</span>
-  <span class="badge">Error handling</span>
+<td>  `Blue/Green deployment` `Automated rollback` `Error handling`
 </td>
 </tr>
 <tr>
 <td><strong>Monitoring & Logging</strong></td>
-<td>
-  <span class="badge">Pipeline notifications</span>
-  <span class="badge">Status monitoring</span>
-  <span class="badge">Test reporting</span>
+<td>  `Pipeline notifications`
+  `Status monitoring`
+  `Test reporting`
 </td>
 </tr>
 <tr>
 <td><strong>Security & Compliance</strong></td>
-<td>
-  <span class="badge">Secure deployment practices</span>
-  <span class="badge">IAM role configuration</span>
-  <span class="badge">Permission management</span>
+<td>  `Secure deployment practices`
+  `IAM role configuration`
+  `Permission management`
 </td>
 </tr>
 </table>
-</div>
 
 ## License
 
@@ -522,7 +466,6 @@ Created for AWS DevOps Engineer Professional certification study purposes.
 
 The project includes a comprehensive notification system to keep team members informed about changes to the codebase and pipeline status.
 
-<div class="notification-system">
 <table>
 <tr>
 <td width="50%">
@@ -566,11 +509,9 @@ This script will:
 </td>
 </tr>
 </table>
-</div>
 
 ### Status Monitoring
 
-<div class="status-monitoring">
 <table>
 <tr>
 <td width="33%">
@@ -599,7 +540,6 @@ This script will:
 </td>
 </tr>
 </table>
-</div>
 
 ## Additional Resources
 
