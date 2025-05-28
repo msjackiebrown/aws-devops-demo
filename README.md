@@ -90,14 +90,23 @@ This application demonstrates a modern CI/CD pipeline using AWS services with se
 
 ```mermaid
 graph LR
-    A[GitHub Repository] -->|Code Push| B[AWS CodePipeline]
-    B --> C[Test Phase]
-    C -->|Run Tests| D[Test Reports]
-    D -->|Validation| E[Build Phase]
-    E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]
-    F --> G[Production Deployment]
-    F -.-> H[Blue/Green Deployment (Optional)]
+    A([GitHub Repository]):::source -->|Code Push| B([AWS CodePipeline]):::pipeline
+    B --> C([Test Phase]):::test
+    C -->|Run Tests| D([Test Reports]):::test
+    D -->|Validation| E([Build Phase]):::build
+    E -->|Build Artifacts| F([AWS CodeDeploy<br/>(In-Place)]):::deploy
+    F --> G([Production Deployment]):::prod
+    F -.-> H([Blue/Green Deployment<br/>(Optional)]):::optional
+
+    classDef source fill:#f9f,stroke:#333,stroke-width:2;
+    classDef pipeline fill:#bbf,stroke:#333,stroke-width:2;
+    classDef test fill:#bfb,stroke:#333,stroke-width:2;
+    classDef build fill:#ffb,stroke:#333,stroke-width:2;
+    classDef deploy fill:#bdf,stroke:#333,stroke-width:2;
+    classDef prod fill:#afa,stroke:#333,stroke-width:2;
+    classDef optional fill:#eee,stroke:#333,stroke-width:2,stroke-dasharray: 5 5;
 ```
+
 - **Solid arrows** show the default in-place deployment path.
 - **Dashed arrow** shows Blue/Green as an optional, advanced path.
 
