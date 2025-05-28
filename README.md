@@ -90,13 +90,13 @@ This application demonstrates a modern CI/CD pipeline using AWS services with se
 
 ```mermaid
 graph LR
-    A[GitHub Repository] -->|Code Push| B[AWS CodePipeline]
-    B --> C[Test Phase]
-    C -->|Run Tests| D[Test Reports]
-    D -->|Validation| E[Build Phase]
-    E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]
-    F --> G[Production Deployment]
-    F -.-> H[Blue/Green Deployment (Optional)]
+    A["GitHub Repository"] -->|Code Push| B["AWS CodePipeline"]
+    B --> C["Test Phase"]
+    C -->|Run Tests| D["Test Reports"]
+    D -->|Validation| E["Build Phase"]
+    E -->|Build Artifacts| F["AWS CodeDeploy (In-Place)"]
+    F --> G["Production Deployment"]
+    F -.-> H["Blue/Green Deployment (Optional)"]
 ```
 
 - **Solid arrows** show the default in-place deployment path.
