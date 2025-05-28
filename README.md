@@ -97,14 +97,6 @@ graph LR
     E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]
     F --> G[Production Deployment]
     F -.-> H[Blue/Green Deployment (Optional)]
-
-    classDef source fill:#f9f,stroke:#333,stroke-width:2;
-    classDef pipeline fill:#bbf,stroke:#333,stroke-width:2;
-    classDef test fill:#bfb,stroke:#333,stroke-width:2;
-    classDef build fill:#ffb,stroke:#333,stroke-width:2;
-    classDef deploy fill:#bdf,stroke:#333,stroke-width:2;
-    classDef prod fill:#afa,stroke:#333,stroke-width:2;
-    classDef optional fill:#eee,stroke:#333,stroke-width:2,stroke-dasharray: 5 5;
 ```
 
 - **Solid arrows** show the default in-place deployment path.
