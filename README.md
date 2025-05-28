@@ -90,13 +90,13 @@ This application demonstrates a modern CI/CD pipeline using AWS services with se
 
 ```mermaid
 graph LR
-    A[GitHub Repository]:::source -->|Code Push| B[AWS CodePipeline]:::pipeline
-    B --> C[Test Phase]:::test
-    C -->|Run Tests| D[Test Reports]:::test
-    D -->|Validation| E[Build Phase]:::build
-    E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]:::deploy
-    F --> G[Production Deployment]:::prod
-    F -.-> H[Blue/Green Deployment (Optional)]:::optional
+    A[GitHub Repository] -->|Code Push| B[AWS CodePipeline]
+    B --> C[Test Phase]
+    C -->|Run Tests| D[Test Reports]
+    D -->|Validation| E[Build Phase]
+    E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]
+    F --> G[Production Deployment]
+    F -.-> H[Blue/Green Deployment (Optional)]
 
     classDef source fill:#f9f,stroke:#333,stroke-width:2;
     classDef pipeline fill:#bbf,stroke:#333,stroke-width:2;
