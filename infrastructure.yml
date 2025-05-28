@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'CloudFormation template for the AWS DevOps Demo Web Application'
+Description: CloudFormation template for the AWS DevOps Demo Web Application
 
 Parameters:
   EnvironmentName:
@@ -33,7 +33,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 0.0.0.0/0  # In production, restrict to specific IPs
+          CidrIp: 0.0.0.0/0 # In production, restrict to specific IPs
 
   WebAppInstanceRole:
     Type: AWS::IAM::Role
@@ -59,7 +59,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-097947612b141c026  # Updated to the latest Amazon Linux 2 AMI (May 2025)
+      ImageId: ami-097947612b141c026 # Updated to the latest Amazon Linux 2 AMI (May 2025)
       SecurityGroupIds:
         - !Ref WebAppSecurityGroup
       IamInstanceProfile: !Ref WebAppInstanceProfile
@@ -70,21 +70,21 @@ Resources:
           Value: !Ref EnvironmentName
         - Key: CodeDeploy
           Value: WebApp
-      UserData:
-        Fn::Base64: !Sub |
+      UserData: !Base64
+        Fn::Sub: |
           #!/bin/bash
           yum update -y
           yum install -y httpd git ruby wget
           systemctl start httpd
           systemctl enable httpd
-          
+
           # Install CodeDeploy Agent
           cd /home/ec2-user
           wget https://aws-codedeploy-${AWS::Region}.s3.amazonaws.com/latest/install
           chmod +x ./install
           ./install auto
           service codedeploy-agent start
-          
+
           # Create a simple index.html while waiting for deployment
           echo "<html><body><h1>AWS DevOps Demo Web App</h1><p>Waiting for CodeDeploy deployment...</p><p>Instance ID: $(curl -s http://169.254.169.254/latest/meta-data/instance-id)</p><p>Region: ${AWS::Region}</p><p>Environment: ${EnvironmentName}</p><p>Deployment Date: $(date)</p></body></html>" > /var/www/html/index.html
 
@@ -102,12 +102,12 @@ Resources:
 Outputs:
   WebsiteURL:
     Description: URL for the web application
-    Value: !Sub 'http://${WebAppInstance.PublicDnsName}'
-  
+    Value: !Sub http://${WebAppInstance.PublicDnsName}
+
   ArtifactBucket:
     Description: S3 bucket for pipeline artifacts
     Value: !Ref WebAppS3Bucket
-  
+
   EC2InstanceId:
     Description: EC2 instance ID
     Value: !Ref WebAppInstance

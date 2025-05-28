@@ -49,3 +49,5 @@ coverage/
 .sass-cache/
 .tmp/
 temp/
+
+notes/

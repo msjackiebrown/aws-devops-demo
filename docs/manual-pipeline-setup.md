@@ -338,7 +338,23 @@ After completing all these steps:
 3. Monitor the progress through the Test and Build phases
 4. Check your email for any notifications when the pipeline completes
 
-## Setting Up Blue/Green Deployment (Optional)
+## Setting Up In-Place Deployment (Recommended)
+
+To enable in-place deployment with CodeDeploy:
+
+1. Navigate to the CloudFormation console
+2. Click **Create stack** > **With new resources**
+3. Upload the `infrastructure.yml` file from your repository (this template provisions EC2 instances and CodeDeploy resources for in-place deployment)
+4. Follow the prompts to configure and deploy the stack
+5. After deployment, add a **Deploy** stage to your pipeline that uses the CodeDeploy application and deployment group created by CloudFormation
+6. In the Deploy stage configuration:
+   - **Provider**: AWS CodeDeploy
+   - **Application name**: Select the CodeDeploy application created by the stack
+   - **Deployment group**: Select the deployment group created by the stack
+   - **Input artifacts**: Use the output from your Build stage
+7. Save and update your pipeline
+
+## Setting Up Blue/Green Deployment (Advanced, Optional)
 
 For Blue/Green deployment implementation:
 
