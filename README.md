@@ -85,7 +85,8 @@ aws-devops-demo/
 
 ### CI/CD Pipeline Overview
 
-This application demonstrates a modern CI/CD pipeline using AWS services with separate testing and building phases:
+This application demonstrates a modern CI/CD pipeline using AWS services with separate testing and building phases.  
+**By default, the pipeline deploys to production using in-place deployment. Blue/Green deployment is available as an advanced, optional setup.**
 
 ```mermaid
 graph LR
@@ -93,12 +94,16 @@ graph LR
     B --> C[Test Phase]
     C -->|Run Tests| D[Test Reports]
     D -->|Validation| E[Build Phase]
-    E -->|Build Artifacts| F[AWS CodeDeploy]
+    E -->|Build Artifacts| F[AWS CodeDeploy (In-Place)]
     F --> G[Production Deployment]
-    F --> H[Blue/Green Deployment]
+    F -.-> H[Blue/Green Deployment (Optional)]
 ```
+- **Solid arrows** show the default in-place deployment path.
+- **Dashed arrow** shows Blue/Green as an optional, advanced path.
 
-![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNp1kMtqwzAQRX9FzMYtJHYbU9fBi9C9obuuFzFWJQvlIdTIdZPg_17ZxoTQdDXMnTn3Dj7pVDSaFB50MeRMkg6PG4z5f_L3jdRpzs9ixY1kavKN90FxdlWZNeNK8KTOaVFQEKbqk94XtDVEMRXqnfpDQ_NLAGRppixJXu3ozTZRnTaRYoMjfj1UmJuRBD3Fn8NFbC_zgr9_OSfpWEMqYweXCb8oCoJyAG-HCr3xzOORLFe7vL40VZpq_bXrQTpINWR1l_-Pmfk6hpZb0wHnMZPG7I63dT8c7_d9fWhWCfkBUoVWiw?type=png)
+![AWS CI/CD Pipeline](https://mermaid.ink/img/pako:eNplkE1PwzAMhu_StQwQpK0wMUAcdsgh2lHdYYcJDRGRpCJplYHYu89pGYxpvdi__v-Pbfk83pQFWmCpylmmiYaXEqV-Zx_XWWJqfRBrXuhsxTfmHcX5R67WjCvBi7qyhYDQ1fygdgXslKbkBuVKfYIR5i4BkKWNsdT2uKJnZWK6MpHCBD1_NwSYm5EELcWPxYVZ5rngr6_WNB2HkNrY0mXCXxQFQT6A18MAvfGVxiNZzn7xvGkGcZzEX-36EDQS43iU9MfJtM3vV-N0PJzOejMHI4i5RmsxoFNbLtFDODn-J7lJFoXP9_ALxR5HRw?type=png)
+
+> **Note:** For most demos and cost-effective setups, use in-place deployment. Blue/Green deployment is available for advanced, zero-downtime scenarios—see the [Manual Pipeline Setup Guide](docs/manual-pipeline-setup.md) for details.
 
 For full details on pipeline stages, features, and AWS DevOps certification topics, see this file and the [Manual Pipeline Setup Guide](docs/manual-pipeline-setup.md).
 
