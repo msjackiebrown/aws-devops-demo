@@ -13,8 +13,9 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 sh '''
+                 curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
                 chmod +x ./codebuild.sh
-                ./codebuild.sh
+                ./codebuild.sh -i aws/codebuild/standard:5.0 -a /tmp/artifacts -s . -t 30
                 '''
             }
         }
