@@ -9,6 +9,13 @@ ARTIFACTS_DIR=./artifacts
 # Use $WORKSPACE if set (Jenkins), else fallback to $PWD
 WORKDIR="${WORKSPACE:-$PWD}"
 
+# Print and check WORKDIR
+echo "WORKDIR is: '$WORKDIR'"
+if [ -z "$WORKDIR" ]; then
+  echo "ERROR: WORKDIR is empty. Please check your Jenkins agent configuration."
+  exit 1
+fi
+
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v "$WORKDIR":/LocalBuild/env \
