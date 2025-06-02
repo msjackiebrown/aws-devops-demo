@@ -10,17 +10,12 @@ pipeline {
         }
 
         stage('Build') {
-            agent {
-                docker {
-                    image 'amazon/aws-codebuild-local:latest'
-                }
-            }
             steps {
                 echo 'Building the project...'
                 sh '''
+                chmod +x ./codebuild.sh
                 ./codebuild.sh buildspec.yml
-                ''' 
-                // sh 'make build'
+                '''
             }
         }
 
