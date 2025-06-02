@@ -6,9 +6,12 @@ set -e
 BUILDSPEC=${1:-buildspec.yml}
 ARTIFACTS_DIR=./artifacts
 
+# Use $WORKSPACE if set (Jenkins), else fallback to $PWD
+WORKDIR="${WORKSPACE:-$PWD}"
+
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "$PWD":/LocalBuild/env \
+  -v "$WORKDIR":/LocalBuild/env \
   -e "IMAGE_NAME=aws/codebuild/standard:7.0" \
   -e "ARTIFACTS=$ARTIFACTS_DIR" \
   amazon/aws-codebuild-local:latest \
