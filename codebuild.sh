@@ -1,5 +1,5 @@
 #!/bin/bash
-# filepath: c:\Users\msjac\GitHub\aws-devops-demo\codebuild.sh
+
 
 set -e
 

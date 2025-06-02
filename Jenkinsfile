@@ -14,7 +14,7 @@ pipeline {
                 echo 'Building the project...'
                 sh '''
                 chmod +x ./codebuild.sh
-                ./codebuild.sh buildspec.yml
+                ./codebuild.sh
                 '''
             }
         }
