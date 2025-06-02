@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build') {
             agent {
-                docker: {
+                docker {
                     image: 'codebuild/standard:latest'
                 }
             }
