@@ -7,7 +7,7 @@ BUILDSPEC=${1:-buildspec.yml}
 ARTIFACTS_DIR=./artifacts
 
 # Use $WORKSPACE if set (Jenkins), else fallback to $PWD
-WORKDIR="${WORKSPACE:-$PWD}"
+WORKDIR=$(pwd)
 
 # Print and check WORKDIR
 echo "WORKDIR is: '$WORKDIR'"
