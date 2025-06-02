@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'codebuild/standard:latest'
+                    image 'amazon/aws-codebuild-local:latest'
                 }
             }
             steps {
