@@ -13,7 +13,11 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 sh '''
+                 echo "Current directory:"
+                 pwd
+                 echo "Workspace contents:"
                  ls -l
+                 echo "buildspec.yml contents:"
                  cat buildspec.yml
                  curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
                  chmod +x ./codebuild_build.sh
