@@ -28,8 +28,8 @@ pipeline {
                     # Patch the script to remove -t (no TTY in Jenkins)
                     sed -i 's/-it /-i /' codebuild_build.sh
 
-                    # Run CodeBuild Local using the correct build image
-                    ./codebuild_build.sh -i public.ecr.aws/codebuild/standard:7.0 -a ./artifacts -b buildspec.yml
+                    # Run CodeBuild Local using the Amazon Linux 2 Standard 4.0 image
+                    ./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 -a ./artifacts -b buildspec.yml
                 '''
             }
         }
