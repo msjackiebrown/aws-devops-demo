@@ -1,6 +1,6 @@
 // Jenkinsfile
 pipeline {
-    agent any
+    agent any // or a standard agent, NOT the CodeBuild Local image
 
     stages {
         stage('Checkout') {
@@ -22,14 +22,9 @@ pipeline {
         stage('CodeBuild Local Build') {
             steps {
                 sh '''
-                    # Download the official CodeBuild local build script
                     curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
                     chmod +x ./codebuild_build.sh
-
-                    # Patch the script to remove -t (no TTY in Jenkins)
                     sed -i 's/-it /-i /' codebuild_build.sh
-
-                    # Run CodeBuild Local using the correct standard image
                     ./codebuild_build.sh -i public.ecr.aws/codebuild/standard:7.0-1.0 -a ./artifacts -b buildspec.yml
                 '''
             }
