@@ -20,20 +20,17 @@ pipeline {
         }
         stage('Run CodeBuild Local') {
             steps {
-                script {
-                    // Pull the latest CodeBuild local agent image (optional, for freshness)
-                    sh 'docker pull public.ecr.aws/codebuild/local-builds:latest'
+                sh '''
+                    # Download the official CodeBuild local build script
+                    curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
+                    chmod +x ./codebuild_build.sh
 
-                    // Run the buildspec using the local agent
-                    sh '''
-                    docker run --rm -t \
-                        -v "$PWD":/LocalBuild \
-                        -e IMAGE_NAME=aws/codebuild/standard:7.0 \
-                        -e ARTIFACTS=/LocalBuild/artifacts \
-                        -e SOURCE=/LocalBuild \
-                        public.ecr.aws/codebuild/local-builds:latest
-                    '''
-                }
+                    # Patch the script to remove -t (no TTY in Jenkins)
+                    sed -i 's/-it /-i /' codebuild_build.sh
+
+                    # Run CodeBuild Local using the correct build image
+                    ./codebuild_build.sh -i public.ecr.aws/codebuild/standard:7.0-1.0 -a ./artifacts -b buildspec.yml
+                '''
             }
         }
     }
