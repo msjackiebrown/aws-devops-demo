@@ -29,7 +29,7 @@ pipeline {
                     sed -i 's/-it /-i /' codebuild_build.sh
 
                     # Run CodeBuild Local using the correct build image
-                    ./codebuild_build.sh -i public.ecr.aws/codebuild/standard:7.0-1.0 -a ./artifacts -b buildspec.yml
+                    ./codebuild_build.sh -i public.ecr.aws/codebuild/standard:7.0 -a ./artifacts -b buildspec.yml
                 '''
             }
         }
