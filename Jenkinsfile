@@ -20,12 +20,12 @@ pipeline {
         }
 
         stage('CodeBuild Local Build') {
-            agent (
+            agent {}
                 docker {
                     image 'public.ecr.aws/codebuild/local-builds:latest'
                     args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.aws:/root/.aws -v $WORKSPACE:/workspace'
                 }
-            )
+        }
             steps {
                 sh ''''
                     # Run CodeBuild Local using the standard image
