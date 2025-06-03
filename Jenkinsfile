@@ -2,6 +2,11 @@
 pipeline {
     agent any
 
+    environment {
+        // Set any required environment variables here
+        // Example: AWS_DEFAULT_REGION = 'us-east-1'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,37 +14,29 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Verify buildspec.yml') {
             steps {
-                echo 'Building the project...'
                 sh '''
-                 echo "Current directory:"
-                 pwd
-                 echo "Workspace contents:"
-                 ls -l
-                 echo "buildspec.yml contents:"
-                 cat buildspec.yml
-                 curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
-                 chmod +x ./codebuild_build.sh
-                 sed -i 's/-it /-i /' codebuild_build.sh
-                 ./codebuild_build.sh -i public.ecr.aws/codebuild/local-builds:latest -a /tmp/artifacts -b buildspec.yml
+                    echo "Current directory: $(pwd)"
+                    ls -l
+                    cat buildspec.yml
                 '''
             }
         }
 
-        stage('Test') {
+        stage('CodeBuild Local Build') {
             steps {
-                echo 'Running tests...'
-                // Add your test commands here, e.g.:
-                // sh 'make test'
-            }
-        }
+                sh '''
+                    # Download the official CodeBuild local build script
+                    curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
+                    chmod +x ./codebuild_build.sh
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                // Add your deploy commands here, e.g.:
-                // sh 'make deploy'
+                    # Patch the script to remove -t (no TTY in Jenkins)
+                    sed -i 's/-it /-i /' codebuild_build.sh
+
+                    # Run CodeBuild Local using the standard image
+                    ./codebuild_build.sh -i aws/codebuild/standard:7.0 -a ./artifacts -b buildspec.yml
+                '''
             }
         }
     }
