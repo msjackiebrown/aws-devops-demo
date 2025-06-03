@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'nodejs:18'
+                    image 'node:18'
                 }
             }
 
