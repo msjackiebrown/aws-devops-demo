@@ -18,18 +18,26 @@ pipeline {
                 '''
             }
         }
-
-        stage('CodeBuild Local Build') {
+        stage('Run CodeBuild Local') {
             steps {
-                sh '''
-                    curl -O https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
-                    chmod +x ./codebuild_build.sh
-                    sed -i 's/-it /-i /' codebuild_build.sh
-                    ./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:5.0 -a ./artifacts -b buildspec.yml
-                '''
+                script {
+                    // Pull the latest CodeBuild local agent image (optional, for freshness)
+                    sh 'docker pull public.ecr.aws/codebuild/local-builds:latest'
+
+                    // Run the buildspec using the local agent
+                    sh '''
+                    docker run --rm -t \
+                        -v "$PWD":/LocalBuild \
+                        -e IMAGE_NAME=aws/codebuild/standard:7.0 \
+                        -e ARTIFACTS=/LocalBuild/artifacts \
+                        -e SOURCE=/LocalBuild \
+                        public.ecr.aws/codebuild/local-builds:latest
+                    '''
+                }
             }
         }
     }
+
 
     post {
         always {
